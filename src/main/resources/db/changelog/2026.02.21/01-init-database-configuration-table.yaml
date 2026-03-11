@@ -1,0 +1,93 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2026.02.21-1
+      author: kenpxrkasf@gmail.com
+      changes:
+        - createTable:
+            tableName: database_configuration
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: db_type
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: environment
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: host
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: port
+                  type: int
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: database_name
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: username
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: encrypted_password
+                  type: varchar(512)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: enabled
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: database_configuration
+            columnNames: name, environment
+            constraintName: uk_database_config_name_env
+
+        - createIndex:
+            tableName: database_configuration
+            indexName: idx_database_config_enabled
+            columns:
+              - column:
+                  name: enabled

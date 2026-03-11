@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: dbshield-configuration-service
+  profiles:
+    active: local
