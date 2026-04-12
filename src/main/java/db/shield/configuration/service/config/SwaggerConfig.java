@@ -19,7 +19,15 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Configuration-Service")
                         .description("Service allows manage database configurations")
-                );
+                )
+                        .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+                        .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()));
+    }
+
+    private SecurityScheme createAPIKeyScheme() {
+        return new SecurityScheme().type(SecurityScheme.Type.HTTP)
+                .bearerFormat("JWT")
+                .scheme("bearer");
     }
 }
 

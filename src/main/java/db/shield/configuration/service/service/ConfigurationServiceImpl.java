@@ -60,11 +60,11 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     public void delete(UUID id) {
         log.info("Deleting configuration id={}", id);
 
-        if (!configurationRepository.existsById(id)) {
+        if (!configurationRepository.existsByExternalId(id)) {
             throw new EntityNotFoundException("Configuration not found: " + id);
         }
 
-        configurationRepository.deleteById(id);
+        configurationRepository.deleteByExternalId(id);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     private DatabaseConfigurationEntity getEntityOrThrow(UUID id) {
-        return configurationRepository.findById(id)
+        return configurationRepository.findDatabaseConfigurationEntityByExternalId(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Configuration not found: " + id)
                 );

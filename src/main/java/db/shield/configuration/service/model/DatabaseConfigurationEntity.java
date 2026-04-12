@@ -7,11 +7,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.UUID;
 
 
 @Entity
@@ -22,6 +25,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DatabaseConfigurationEntity extends BaseEntity {
 
+    @Column(nullable = false, length = 100, name = "externalId")
+    private UUID externalId;
     @Column(nullable = false, length = 150)
     private String name;
     @Enumerated(EnumType.STRING)
@@ -42,4 +47,11 @@ public class DatabaseConfigurationEntity extends BaseEntity {
     private String encryptedPassword;
     @Column(nullable = false)
     private boolean enabled;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.externalId == null) {
+            this.externalId = UUID.randomUUID();
+        }
+    }
 }

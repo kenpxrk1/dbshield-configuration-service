@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/db-shield
-    username: postgres
-    password: root-password-123
+    url: jdbc:postgresql://localhost:5432/dbshield
+    username: dbshield
+    password: dbshield
     hikari:
       schema: configuration-service
 
@@ -17,10 +17,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: configuration-service
+        default_schema: configuration_service
     open-in-view: false
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
-    default-schema: configuration-service
+    default-schema: configuration_service
     enabled: true
+
+jwt:
+  secret-key: co7IB8BVZ2ZCWoyjnKbrX4ByykVOvY38vtv2DNK9kN4=
+  expire-time-access-token: 900000
+  expire-time-refresh-token: 3

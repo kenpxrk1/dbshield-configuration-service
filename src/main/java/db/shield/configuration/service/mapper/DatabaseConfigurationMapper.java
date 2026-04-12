@@ -22,12 +22,14 @@ public interface DatabaseConfigurationMapper {
     List<DatabaseConfigurationResponse> toResponseList(List<DatabaseConfigurationEntity> entities);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "externalId", ignore = true)
     @Mapping(target = "encryptedPassword", ignore = true)
     @Mapping(target = "enabled", constant = "true")
     DatabaseConfigurationEntity toEntity(DatabaseConfigurationCreateRequest request);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "externalId", ignore = true)
     @Mapping(target = "name", ignore = true)
     @Mapping(target = "dbType", ignore = true)
     @Mapping(target = "environment", ignore = true)

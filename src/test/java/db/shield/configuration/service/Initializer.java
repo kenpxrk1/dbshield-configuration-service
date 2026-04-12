@@ -43,7 +43,8 @@ public abstract class Initializer {
                 );
 
         configurationEntity = new DatabaseConfigurationEntity();
-        configurationEntity.setId(UUID.randomUUID());
+        configurationEntity.setId(1L);
+        configurationEntity.setExternalId(UUID.randomUUID());
         configurationEntity.setName("main-db");
         configurationEntity.setDbType(DatabaseType.POSTGRES);
         configurationEntity.setEnvironment(EnvironmentType.PROD);

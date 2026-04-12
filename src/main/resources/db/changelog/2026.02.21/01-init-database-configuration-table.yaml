@@ -8,9 +8,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: uuid
+                  type: BIGSERIAL
                   constraints:
                     primaryKey: true
+                    primaryKeyName: pk_db
+
+              - column:
+                  name: external_id
+                  type: UUID
+                  constraints:
+                    unique: true
                     nullable: false
 
               - column:

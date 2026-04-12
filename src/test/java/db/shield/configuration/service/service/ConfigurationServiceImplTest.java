@@ -48,10 +48,10 @@ class ConfigurationServiceImplTest extends Initializer {
 
     @Test
     void update_shouldUpdateAndReturnResponse() {
-        when(configurationRepository.findById(configurationEntity.getId()))
+        when(configurationRepository.findDatabaseConfigurationEntityByExternalId(configurationEntity.getExternalId()))
                 .thenReturn(Optional.of(configurationEntity));
 
-        var response = service.update(configurationEntity.getId(), configurationUpdateRequest);
+        var response = service.update(configurationEntity.getExternalId(), configurationUpdateRequest);
 
         assertThat(response.host()).isEqualTo(configurationUpdateRequest.host());
         assertThat(response.port()).isEqualTo(configurationUpdateRequest.port());
@@ -60,7 +60,7 @@ class ConfigurationServiceImplTest extends Initializer {
     @Test
     void update_shouldThrowIfNotFound() {
         UUID id = UUID.randomUUID();
-        when(configurationRepository.findById(id)).thenReturn(Optional.empty());
+        when(configurationRepository.findDatabaseConfigurationEntityByExternalId(id)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class,
                 () -> service.update(id, configurationUpdateRequest));
@@ -68,18 +68,18 @@ class ConfigurationServiceImplTest extends Initializer {
 
     @Test
     void delete_shouldDeleteConfiguration() {
-        UUID id = configurationEntity.getId();
-        when(configurationRepository.existsById(id)).thenReturn(true);
+        UUID id = configurationEntity.getExternalId();
+        when(configurationRepository.existsByExternalId(id)).thenReturn(true);
 
         service.delete(id);
 
-        verify(configurationRepository).deleteById(id);
+        verify(configurationRepository).deleteByExternalId(id);
     }
 
     @Test
     void delete_shouldThrowIfNotFound() {
         UUID id = UUID.randomUUID();
-        when(configurationRepository.existsById(id)).thenReturn(false);
+        when(configurationRepository.existsByExternalId(id)).thenReturn(false);
 
         assertThrows(EntityNotFoundException.class,
                 () -> service.delete(id));
@@ -87,18 +87,18 @@ class ConfigurationServiceImplTest extends Initializer {
 
     @Test
     void getById_shouldReturnConfiguration() {
-        UUID id = configurationEntity.getId();
-        when(configurationRepository.findById(id)).thenReturn(Optional.of(configurationEntity));
+        UUID id = configurationEntity.getExternalId();
+        when(configurationRepository.findDatabaseConfigurationEntityByExternalId(id)).thenReturn(Optional.of(configurationEntity));
 
         var response = service.getById(id);
 
-        assertThat(response.id()).isEqualTo(id);
+        assertThat(response.externalId()).isEqualTo(id);
     }
 
     @Test
     void getById_shouldThrowIfNotFound() {
         UUID id = UUID.randomUUID();
-        when(configurationRepository.findById(id)).thenReturn(Optional.empty());
+        when(configurationRepository.findDatabaseConfigurationEntityByExternalId(id)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class,
                 () -> service.getById(id));
@@ -111,13 +111,13 @@ class ConfigurationServiceImplTest extends Initializer {
         var responses = service.getAll();
 
         assertThat(responses).hasSize(1);
-        assertThat(responses.get(0).id()).isEqualTo(configurationEntity.getId());
+        assertThat(responses.get(0).externalId()).isEqualTo(configurationEntity.getExternalId());
     }
 
     @Test
     void enable_shouldSetEnabledTrue() {
-        UUID id = configurationEntity.getId();
-        when(configurationRepository.findById(id)).thenReturn(Optional.of(configurationEntity));
+        UUID id = configurationEntity.getExternalId();
+        when(configurationRepository.findDatabaseConfigurationEntityByExternalId(id)).thenReturn(Optional.of(configurationEntity));
 
         service.enable(id);
 
@@ -126,8 +126,8 @@ class ConfigurationServiceImplTest extends Initializer {
 
     @Test
     void disable_shouldSetEnabledFalse() {
-        UUID id = configurationEntity.getId();
-        when(configurationRepository.findById(id)).thenReturn(Optional.of(configurationEntity));
+        UUID id = configurationEntity.getExternalId();
+        when(configurationRepository.findDatabaseConfigurationEntityByExternalId(id)).thenReturn(Optional.of(configurationEntity));
 
         service.disable(id);
 

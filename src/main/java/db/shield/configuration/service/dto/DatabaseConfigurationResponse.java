@@ -13,7 +13,7 @@ import java.util.UUID;
 public record DatabaseConfigurationResponse(
 
         @Schema(description = "Unique ID of the configuration", example = "123e4567-e89b-12d3-a456-426614174000")
-        UUID id,
+        UUID externalId,
 
         @Schema(description = "Configuration name", example = "Main DB Config")
         String name,

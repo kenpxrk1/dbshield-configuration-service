@@ -39,7 +39,7 @@ class DatabaseConfigurationMapperTest extends Initializer {
                 mapper.toResponse(configurationEntity);
 
         assertThat(response).isNotNull();
-        assertThat(response.id()).isEqualTo(configurationEntity.getId());
+        assertThat(response.externalId()).isEqualTo(configurationEntity.getExternalId());
         assertThat(response.name()).isEqualTo(configurationEntity.getName());
         assertThat(response.dbType()).isEqualTo(configurationEntity.getDbType());
         assertThat(response.environment()).isEqualTo(configurationEntity.getEnvironment());
@@ -73,7 +73,7 @@ class DatabaseConfigurationMapperTest extends Initializer {
                 mapper.toResponseList(List.of(configurationEntity));
 
         assertThat(responses).hasSize(1);
-        assertThat(responses.get(0).id())
-                .isEqualTo(configurationEntity.getId());
+        assertThat(responses.get(0).externalId())
+                .isEqualTo(configurationEntity.getExternalId());
     }
 }

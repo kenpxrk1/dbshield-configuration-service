@@ -28,17 +28,13 @@ import java.util.UUID;
 public class BaseEntity {
 
     @Id
-    @Column(nullable = false, updatable = false)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
     @LastModifiedDate
     private Instant updatedAt;
 
-    protected void initId() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-    }
 }
