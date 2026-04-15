@@ -27,6 +27,10 @@ public class SecurityConfig {
             "/swagger-ui/**"
     };
 
+    private static final String[] INTERNAL_WHITELIST = {
+            "/api/internal/configs/**"
+    };
+
     private final JWTService jwtService;
 
     @Bean
@@ -37,6 +41,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                        .requestMatchers(INTERNAL_WHITELIST).permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception
