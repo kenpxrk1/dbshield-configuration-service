@@ -36,6 +36,9 @@ public record DatabaseConfigurationResponse(
         @Schema(description = "Database username", example = "dbuser")
         String username,
 
+        @Schema(description = "Database password", example = "dbpassword")
+        String encryptedPassword,
+
         @Schema(description = "Indicates whether the configuration is enabled", example = "true")
         boolean enabled,
 
